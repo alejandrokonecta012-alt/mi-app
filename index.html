@@ -1569,7 +1569,6 @@ button:active{
 .s60{}
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -1952,10 +1951,6 @@ button:active{
 
 <script>
 
-  const SUPABASE_URL = "https://mnwwjnmztxmwetsosugp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_ZBnRvC877fnk_ZhmTmj_Og_dSweqDyo";
-
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 /* ===================================================== */
 /* ===================== GLOBAL STATE ================== */
@@ -3224,45 +3219,33 @@ async function testSupabase() {
 
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-const supabaseUrl = 'https://mnwwjnmztxmwetsosugp.supabase.co';
-const supabaseKey = 'sb_secret_qN4JzrxUPWYxYLIY-dorVg_vMC6F7Ge';
+document.addEventListener("DOMContentLoaded", () => {
 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  const supabaseUrl = "https://mnwwjnmztxmwetsosugp.supabase.co";
+  const supabaseKey = "sb_publishable_ZBnRvC877fnk_ZhmTmj_Og_dSweqDyo";
 
-// TEST
-async function testSupabase() {
-  const { data, error } = await supabase
-    .from("chat_messages")
-    .select("*");
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  console.log(error ? error : data);
-}
+  async function guardarChat(mensaje, respuesta) {
+    const { data, error } = await supabase
+      .from("chat_messages")
+      .insert([{ mensaje, respuesta }])
+      .select();
 
-// GUARDAR
-async function guardarChat(mensaje, respuesta) {
-  const { data, error } = await supabase
-    .from("chat_messages")
-    .insert([
-      {
-        mensaje,
-        respuesta
-      }
-    ]);
-
-  if (error) {
-    console.log("ERROR GUARDANDO:", error);
-  } else {
-    console.log("GUARDADO OK:", data);
+    if (error) {
+      console.log("ERROR:", error);
+    } else {
+      console.log("GUARDADO OK:", data);
+    }
   }
-}
 
-// EXPORT
-window.guardarChat = guardarChat;
-window.testSupabase = testSupabase;
+  // 🔥 CLAVE:
+  window.guardarChat = guardarChat;
+
+});
 </script>
-
 </body>
 </html>
